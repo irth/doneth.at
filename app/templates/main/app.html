@@ -1,4 +1,5 @@
 {% extends "_skel.html" %}
+{% block title %}{% if is_today %}Home{% else %}{{ day }}{% endif %}{% endblock %}
 {% block content %}
 <div class="max-w-lg mx-auto card">
     <form method="POST" action="{{ url_for('main.index') }}">
