@@ -1,8 +1,27 @@
 {% extends "_skel.html" %}
 {% block content %}
-<div class="card max-w-lg mx-auto">
-    {% if current_user.is_authenticated %}
-    Hi {{ current_user.username }}! <a href="{{ url_for('auth.logout') }}">Log out.</a>
-    {% endif %}
+<div class="max-w-lg m-auto card">
+    <h3 class="text-2xl text-center">Welcome!</h3>
+    <p>
+        DoneTh.at is a website that allows you to:
+        <ul class="pl-4 list-disc">
+            <li>track your daily accomplishments,</li>
+            <li>keep a daily goal,</li>
+            <li>have a more objective outlook on your day-to-day productivity!</li>
+        </ul>
+        <!-- TODO: what have you accomplished but on homepage, where it stores your accomplishment in session and asks you to log in or sign up -->
+    </p>
+</div>
+
+<div class="max-w-xl m-auto overflow-hidden bg-white border-2 border-gray-700 border-solid rounded-lg shadow-xl">
+    <img src="{{ url_for('static', filename='screencap.png') }}">
+</div>
+
+<div class="max-w-lg m-auto text-center card">
+    <h2 class="mb-4 text-2xl">Interested?</h2>
+    <p class="mb-4">
+        <a href="{{ url_for('auth.register') }}" class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-500">
+            Sign up</a> or <a href="{{ url_for('auth.login') }}" class="link">log in</a>.
+    </p>
 </div>
 {% endblock %}
