@@ -13,6 +13,17 @@
 <body>
     {% block body %}
     <div class="content container mx-auto">
+        <div class="card {% block header_width %}max-w-lg{% endblock %} mx-auto text-center ">
+            <h1 class="text-5xl">DoneTh.at</h1>
+            {% block header_user %}
+            {% if current_user.is_authenticated %}
+            <p>Hi <span class="font-mono">{{ current_user.username }}</span>!</p>
+            <p>
+                <a class="link text-xs" href="{{ url_for('auth.logout') }}">Log out.</a>
+            </p>
+            {% endif %}
+            {% endblock %}
+        </div>
         {% block content %}
         {% endblock %}
     </div>

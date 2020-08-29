@@ -1,8 +1,10 @@
 {% extends "_skel.html" %}
+{% block header_width %}max-w-xs{% endblock %}
+{% block header_user %}{% endblock %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
 <div class="w-full max-w-xs mx-auto">
-    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-4 mb-4 mt-4">
+    <form method="POST" class="card auth-form">
         <h3>Are you sure you want to log out?</h3>
         {{ form.csrf_token }}
         {{ render_field(form.submit, False) }}

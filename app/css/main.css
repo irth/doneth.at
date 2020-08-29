@@ -40,10 +40,55 @@ form input[type=password]:focus {
 }
 
 form input[type=submit] {
-    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded w-full mt-2;
+    @apply font-bold py-2 px-4 rounded w-full mt-2;
 }
 
-form input[type=submit]:hover {
+form.auth-form input[type=submit] {
+    @apply bg-blue-500 text-white;
+}
+
+.green-btn {
+    @apply bg-green-500 text-white;
+}
+
+.accomplishment .difficulty {
+    @apply font-bold;
+}
+
+.accomplishment .difficulty-easy {
+    @apply text-green-700;
+}
+
+.accomplishment .difficulty-medium {
+    @apply text-orange-700;
+}
+
+.accomplishment .difficulty-hard {
+    @apply text-red-700;
+}
+
+.green-btn:hover {
+    @apply bg-green-700;
+}
+
+.orange-btn {
+    @apply bg-orange-500 text-white;
+}
+
+.orange-btn:hover {
+    @apply bg-orange-700;
+}
+
+.red-btn {
+    @apply bg-red-500 text-white;
+}
+
+.red-btn:hover {
+    @apply bg-red-700;
+}
+
+
+form.auth-form input[type=submit]:hover {
     @apply bg-blue-700;
 }
 
@@ -59,3 +104,10 @@ form input[type=submit]:focus {
     @apply text-blue-500;
 }
 
+.card {
+    @apply bg-white shadow-md rounded px-8 pt-6 pb-6 mb-4 mt-4;
+}
+
+.auth-form.card {
+    @apply pb-4;
+}

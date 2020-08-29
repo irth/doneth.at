@@ -1,0 +1,45 @@
+{% extends "_skel.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto card">
+    <form method="POST" action="{{ url_for('main.index') }}">
+        {{ form.csrf_token }}
+        {{ form.text(placeholder="What did you accomplish today?", class_="placeholder-black", autofocus=True) }}
+        <div class="flex">
+            {{ form.submit_5(class_="w-1/3 mr-1 green-btn") }}
+            {{ form.submit_10(class_="w-1/3 mx-1 orange-btn") }}
+            {{ form.submit_15(class_="w-1/3 ml-1 red-btn") }}
+        </div>
+    </form>
+</div>
+<div class="max-w-lg mx-auto card">
+    <h3 class="text-2xl">{{ day }}</h3>
+    {% for accomplishment in accomplishments %}
+    <div class="flex justify-between my-1 ml-2 accomplishment">
+        <div>{{ accomplishment.text }}</div>
+        <div class="difficulty-{{ accomplishment.difficulty_class }} difficulty">{{ accomplishment.difficulty }} XP
+        </div>
+    </div>
+    <hr>
+    {% else %}
+    <div class="my-1 ml-2 text-sm accomplishment">
+        {% if false %}
+        <!-- TODO: random text if no accomplishments -->{% endif %}
+        {% if is_today %}
+        <p>No accomplishments today... yet!</p>
+        {% else %}
+        <p>Nothing logged that day... but it's okay to take a break!</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="flex justify-end my-1 ml-2 accomplishment">
+        <div><span class="pr-1 text-xs text-gray-700">total:</span> <span class="difficulty">{{ total }} XP</div>
+    </div>
+    <div class="flex justify-between mt-2 text-sm accomplishment">
+        <div><a href="{{ url_for('main.index', day=yesterday) }}" class="text-blue-700">Previous day</a></div>
+        {% if tomorrow %}<a href="{{ url_for('main.index', day=tomorrow) }}" class="text-blue-700">Next day</a>
+    </div>{% endif %}
+</div>
+
+</div>
+</div>
+{% endblock %}
