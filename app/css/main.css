@@ -1,0 +1,61 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+body {
+    @apply bg-gray-200;
+}
+
+form input[type=text],
+form input[type=password] {
+    @apply shadow;
+    @apply appearance-none;
+    @apply border;
+    @apply rounded;
+    @apply w-full;
+    @apply py-2;
+    @apply px-3;
+    @apply text-gray-700;
+    @apply leading-tight;
+}
+
+form div.error input {
+    @apply border-red-500;
+}
+
+form div.error ul.errors {
+    @apply pl-1 pt-1;
+}
+
+form div.error ul.errors li {
+    @apply text-red-500 text-xs italic;
+}
+
+form input[type=text]:focus,
+form input[type=password]:focus {
+    @apply outline-none;
+    @apply shadow-outline;
+}
+
+form input[type=submit] {
+    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded w-full mt-2;
+}
+
+form input[type=submit]:hover {
+    @apply bg-blue-700;
+}
+
+form input[type=submit]:focus {
+    @apply outline-none shadow-outline;
+}
+
+.link {
+    @apply text-blue-700 underline;
+}
+
+.link:hover {
+    @apply text-blue-500;
+}
+

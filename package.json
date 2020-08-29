@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "tailwindcss": "^1.7.5"
+  },
+  "scripts": {
+    "build": "tailwindcss build app/css/main.css -o app/static/style.css"
+  },
+  "name": "donethat-backend",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Wojciech Kwolek <me@irth.pl>",
+  "license": "MIT"
+}

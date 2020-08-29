@@ -1,0 +1,3 @@
+{% if current_user.is_authenticated %}
+Hi {{ current_user.username }}! <a href="{{ url_for('auth.logout') }}">Log out.</a>
+{% endif %}

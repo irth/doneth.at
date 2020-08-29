@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <title>{% block title %}{% endblock %} - DoneTh.at</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+    <div class="content container mx-auto">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% endblock %}
+</body>
+
+</html>

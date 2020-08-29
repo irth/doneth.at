@@ -1,0 +1,12 @@
+{% extends "_skel.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+<div class="w-full max-w-xs mx-auto">
+    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-4 mb-4 mt-4">
+        {{ form.csrf_token }}
+        {{ render_field(form.username) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.submit, False) }}
+    </form>
+</div>
+{% endblock %}
