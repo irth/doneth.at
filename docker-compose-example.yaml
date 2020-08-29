@@ -1,0 +1,14 @@
+version: '3'
+volumes:
+    data:
+
+services:
+    app:
+        build: .
+        volumes:
+            - data:/data
+        ports:
+            - 3103:5000
+        environment:
+            - FLASK_SECRET_KEY="changeme"
+
