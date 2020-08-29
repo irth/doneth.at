@@ -15,7 +15,7 @@
     {% block body %}
     <div class="container mx-auto content">
         <div class="card {% block header_width %}max-w-lg{% endblock %} mx-auto text-center ">
-            <h1 class="text-5xl">DoneTh.at</h1>
+            <h1 class="text-5xl"><a href="{{ url_for('main.index') }}">DoneTh.at</a></h1>
             {% block header_user %}
             {% if current_user.is_authenticated %}
             <p>Hi <span class="font-mono">{{ current_user.username }}</span>!</p>
@@ -27,6 +27,9 @@
         </div>
         {% block content %}
         {% endblock %}
+        <div class="pt-4 mb-8 text-xs text-center">
+            Made with ❤️ by <a href="https://irth.pl" class="text-blue-700">Wojciech ~irth Kwolek</a>
+        </div>
     </div>
     {% endblock %}
 </body>
