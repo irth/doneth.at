@@ -67,6 +67,7 @@ def register():
         try:
             db.session.add(user)
             db.session.commit()
+            login_user(user, remember=True)
         except sqlalchemy.exc.IntegrityError as e:
             db.session.rollback()
             if "UNIQUE" in str(e):
@@ -74,7 +75,6 @@ def register():
                 return render_template('auth/register.html', form=form)
             else:
                 raise
-        login_user(user)
         return redirect('/')
     return render_template('auth/register.html', form=form)
 
