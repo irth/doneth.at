@@ -7,19 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='js/turbolinks/turbolinks.js') }}"></script>
     {% endblock %}
 </head>
 
 <body>
     {% block body %}
-    <div class="content container mx-auto">
+    <div class="container mx-auto content">
         <div class="card {% block header_width %}max-w-lg{% endblock %} mx-auto text-center ">
             <h1 class="text-5xl">DoneTh.at</h1>
             {% block header_user %}
             {% if current_user.is_authenticated %}
             <p>Hi <span class="font-mono">{{ current_user.username }}</span>!</p>
             <p>
-                <a class="link text-xs" href="{{ url_for('auth.logout') }}">Log out.</a>
+                <a class="text-xs link" href="{{ url_for('auth.logout') }}">Log out.</a>
             </p>
             {% endif %}
             {% endblock %}
