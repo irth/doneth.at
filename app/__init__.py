@@ -9,7 +9,6 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
         "DATABASE_URL", "sqlite:///app.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SERVER_NAME'] = os.getenv('FLASK_SERVER_NAME', 'doneth.at')
 
     from . import db
     db.init_app(app)
