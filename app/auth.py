@@ -89,6 +89,7 @@ def login():
             return redirect('/')
         else:
             form.password.errors.append('Invalid username or password.')
+            return render_template('auth/login.html', form=form)
 
         return redirect('/')
     return render_template('auth/login.html', form=form)
