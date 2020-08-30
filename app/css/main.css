@@ -26,11 +26,11 @@ form div.error input {
 }
 
 form div.error ul.errors {
-    @apply pl-1 pt-1;
+    @apply pt-1 pl-1;
 }
 
 form div.error ul.errors li {
-    @apply text-red-500 text-xs italic;
+    @apply text-xs italic text-red-500;
 }
 
 form input[type=text]:focus,
@@ -40,19 +40,20 @@ form input[type=password]:focus {
 }
 
 form input[type=submit] {
-    @apply font-bold py-2 px-4 rounded w-full mt-2;
+    @apply w-full px-4 py-2 mt-2 font-bold rounded;
 }
 
 form.auth-form input[type=submit] {
-    @apply bg-blue-500 text-white;
+    @apply text-white bg-blue-500;
 }
 
 .green-btn {
-    @apply bg-green-500 text-white;
+    @apply text-white bg-green-500;
 }
 
 .accomplishment .difficulty {
-    @apply font-bold;
+    @apply flex-shrink-0 pl-1 font-bold text-right;
+    min-width: 3em;
 }
 
 .accomplishment .difficulty-easy {
@@ -72,7 +73,7 @@ form.auth-form input[type=submit] {
 }
 
 .orange-btn {
-    @apply bg-orange-500 text-white;
+    @apply text-white bg-orange-500;
 }
 
 .orange-btn:hover {
@@ -80,7 +81,7 @@ form.auth-form input[type=submit] {
 }
 
 .red-btn {
-    @apply bg-red-500 text-white;
+    @apply text-white bg-red-500;
 }
 
 .red-btn:hover {
@@ -93,7 +94,7 @@ form.auth-form input[type=submit]:hover {
 }
 
 form input[type=submit]:focus {
-    @apply outline-none shadow-outline;
+    @apply shadow-outline outline-none;
 }
 
 .link {
@@ -105,7 +106,7 @@ form input[type=submit]:focus {
 }
 
 .card {
-    @apply bg-white shadow-md rounded px-8 pt-6 pb-6 mb-4 mt-4;
+    @apply px-8 pt-6 pb-6 mt-4 mb-4 bg-white rounded shadow-md;
 }
 
 .auth-form.card {

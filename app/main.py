@@ -11,8 +11,10 @@ main = Blueprint('main', __name__)
 
 
 class NewAccomplishementForm(FlaskForm):
-    text = StringField('Accomplishment', validators=[
-                       DataRequired(), Length(max=128)])
+    text = StringField(
+        'Accomplishment',
+        validators=[
+            DataRequired(), Length(max=256)])
     submit_5 = SubmitField('5 XP')
     submit_10 = SubmitField('10 XP')
     submit_15 = SubmitField('15 XP')

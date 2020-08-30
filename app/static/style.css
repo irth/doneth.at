@@ -22064,16 +22064,16 @@ form div.error input {
 }
 
 form div.error ul.errors {
-  padding-left: 0.25rem;
   padding-top: 0.25rem;
+  padding-left: 0.25rem;
 }
 
 form div.error ul.errors li {
+  font-size: 0.75rem;
+  font-style: italic;
   --text-opacity: 1;
   color: #f56565;
   color: rgba(245, 101, 101, var(--text-opacity));
-  font-size: 0.75rem;
-  font-style: italic;
 }
 
 form input[type=text]:focus,
@@ -22083,36 +22083,40 @@ form input[type=password]:focus {
 }
 
 form input[type=submit] {
-  font-weight: 700;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  width: 100%;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-radius: 0.25rem;
-  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   margin-top: 0.5rem;
+  font-weight: 700;
+  border-radius: 0.25rem;
 }
 
 form.auth-form input[type=submit] {
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
   --bg-opacity: 1;
   background-color: #4299e1;
   background-color: rgba(66, 153, 225, var(--bg-opacity));
-  --text-opacity: 1;
-  color: #fff;
-  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 .green-btn {
-  --bg-opacity: 1;
-  background-color: #48bb78;
-  background-color: rgba(72, 187, 120, var(--bg-opacity));
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #48bb78;
+  background-color: rgba(72, 187, 120, var(--bg-opacity));
 }
 
 .accomplishment .difficulty {
+  flex-shrink: 0;
+  padding-left: 0.25rem;
   font-weight: 700;
+  text-align: right;
+  min-width: 3em;
 }
 
 .accomplishment .difficulty-easy {
@@ -22140,12 +22144,12 @@ form.auth-form input[type=submit] {
 }
 
 .orange-btn {
-  --bg-opacity: 1;
-  background-color: #ed8936;
-  background-color: rgba(237, 137, 54, var(--bg-opacity));
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #ed8936;
+  background-color: rgba(237, 137, 54, var(--bg-opacity));
 }
 
 .orange-btn:hover {
@@ -22155,12 +22159,12 @@ form.auth-form input[type=submit] {
 }
 
 .red-btn {
-  --bg-opacity: 1;
-  background-color: #f56565;
-  background-color: rgba(245, 101, 101, var(--bg-opacity));
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+  --bg-opacity: 1;
+  background-color: #f56565;
+  background-color: rgba(245, 101, 101, var(--bg-opacity));
 }
 
 .red-btn:hover {
@@ -22176,8 +22180,8 @@ form.auth-form input[type=submit]:hover {
 }
 
 form input[type=submit]:focus {
-  outline: 0;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  outline: 0;
 }
 
 .link {
@@ -22194,17 +22198,17 @@ form input[type=submit]:focus {
 }
 
 .card {
-  --bg-opacity: 1;
-  background-color: #fff;
-  background-color: rgba(255, 255, 255, var(--bg-opacity));
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 0.25rem;
   padding-left: 2rem;
   padding-right: 2rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  margin-bottom: 1rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .auth-form.card {

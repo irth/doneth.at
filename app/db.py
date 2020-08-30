@@ -43,7 +43,7 @@ class Accomplishment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     time = db.Column(db.DateTime(), nullable=False,
                      default=db.func.current_timestamp())
-    text = db.Column(db.String(128), nullable=False)
+    text = db.Column(db.String(256), nullable=False)
     difficulty = db.Column(db.Integer)
 
     @property
