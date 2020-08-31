@@ -37,6 +37,8 @@
                 <a class="text-red-700 underline hover:text-red-500"
                     href="{{ url_for('main.delete_accomplishment', accomplishment_id=accomplishment.id) }}">delete</a>
             </div>
+            <div><a class="text-blue-700 underline hover:text-blue-500"
+                    href="{{ url_for('main.edit_accomplishment', accomplishment_id=accomplishment.id) }}">edit</a></div>
         </div>
         {% endif %}
     </div>

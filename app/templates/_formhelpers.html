@@ -1,7 +1,7 @@
-{% macro render_field(field, label=True) %}
-<div class="mb-4 {% if field.errors %}error{% endif %}">
+{% macro render_field(field, label=True, wrapper_class="") %}
+<div class="mb-4 {% if field.errors %}error{% endif %} {{ wrapper_class }}">
     <label for="{{ field.id }}"
-        class="block text-gray-700 text-sm font-bold mb-2">{% if label %}{{ field.label }}{% endif %}</label>
+        class="block mb-2 text-sm font-bold text-gray-700">{% if label %}{{ field.label }}{% endif %}</label>
     {{ field(**kwargs)|safe }}
     {% if field.errors %}
     <ul class="errors">

@@ -2,8 +2,8 @@ from . import timeutils
 from flask import Blueprint, render_template, redirect, url_for, abort
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField, IntegerField
+from wtforms.validators import DataRequired, Length, NumberRange
 from .db import db, Accomplishment
 from datetime import datetime, timedelta
 
@@ -128,3 +128,35 @@ def delete_accomplishment(accomplishment_id):
         form=form,
         accomplishment=a,
         cancel=back_url)
+
+
+class EditForm(FlaskForm):
+    text = StringField(
+        'Accomplishment',
+        validators=[DataRequired(), Length(max=256)]
+    )
+    difficulty = IntegerField(
+        'Difficulty (XP)',
+        validators=[DataRequired(), NumberRange(max=100, min=-100)]
+    )
+    submit = SubmitField('Save')
+
+
+@main.route('/accomplishment/<accomplishment_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_accomplishment(accomplishment_id):
+    a = Accomplishment.query.get_or_404(accomplishment_id)
+    if a.user_id != current_user.id:
+        abort(403)
+
+    back_url = url_for(
+        'main.edit_day', day=timeutils.as_str(timeutils.day(a.time)))
+
+    form = EditForm(obj=a)
+    if form.validate_on_submit():
+        a.text = form.text.data
+        a.difficulty = form.difficulty.data
+        db.session.commit()
+        return redirect(back_url)
+
+    return render_template('main/edit.html', form=form, cancel=back_url)

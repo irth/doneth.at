@@ -48,6 +48,10 @@ class Accomplishment(db.Model):
 
     @property
     def difficulty_class(self):
+        if self.difficulty < 0:
+            return "negative"
+        if self.difficulty == 0:
+            return "zero"
         if self.difficulty <= 5:
             return "easy"
         if self.difficulty <= 10:
