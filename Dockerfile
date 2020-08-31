@@ -10,5 +10,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     pip install -r requirements.txt && pip install gunicorn
 COPY . /app/
+RUN flask digest compile
 ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:create_app()"]
