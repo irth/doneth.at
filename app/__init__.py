@@ -25,4 +25,7 @@ def create_app():
     auth.init_app(app)
     app.register_blueprint(auth.blueprint)
 
+    from . import stats
+    app.register_blueprint(stats.blueprint)
+
     return app

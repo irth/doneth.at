@@ -1,0 +1,9 @@
+{% extends "_skel.html" %}
+{% block title %}Stats{% endblock %}
+{% block content %}
+<div class="max-w-lg mx-auto text-center card">
+    <p><b>Total accomplishments added:</b> {{ total }}<br>
+        <b>Without mine:</b> {{ total_without_mine }}<br>
+        <b>Registered users:</b> {{ total_users }}</p>
+</div>
+{% endblock %}
