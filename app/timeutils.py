@@ -25,6 +25,8 @@ def _suffix(d):
 def as_fancy_str(day_):
     if day_ is None:
         return None
+    if is_today(day_):
+        return "Today"
     return day_.strftime("%B {S}, %Y").replace('{S}', str(day_.day) + _suffix(day_.day))
 
 

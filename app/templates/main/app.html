@@ -1,7 +1,7 @@
 {% extends "_skel.html" %}
-{% block title %}{% if is_today %}Home{% else %}{{ day }}{% endif %}{% endblock %}
+{% block title %}{{ day.fancy }}{% endblock %}
 {% block content %}
-<div class="max-w-lg mx-auto card">
+<div class="max-w-xl mx-auto card">
     <form method="POST" action="{{ url_for('main.index') }}">
         {{ form.csrf_token }}
         {{ form.text(placeholder="What did you accomplish today?", class_="placeholder-black", autofocus=True) }}
@@ -13,19 +13,40 @@
     </form>
 </div>
 <div class="max-w-lg mx-auto card">
-    <h3 class="mb-4 text-2xl">{{ day }}</h3>
-    {% for accomplishment in accomplishments %}
-    <div class="flex justify-between my-1 ml-2 accomplishment">
-        <div>{{ accomplishment.text }}</div>
-        <div class="difficulty-{{ accomplishment.difficulty_class }} difficulty">{{ accomplishment.difficulty }} XP
+    <div class="flex items-baseline justify-between mb-4">
+        <div>
+            <h3 class="text-2xl">{{ day.fancy }}</h3>
         </div>
+        {% if edit %}
+        <div><a href="{{ url_for('main.index', day=day.string) }}" class="link">done</a></div>
+        {% else %}
+        {% if accomplishments %}
+        <div><a href="{{ url_for('main.edit_day', day=day.string) }}" class="link">edit</a></div>
+        {% endif %}
+        {% endif %}
+    </div>
+    {% for accomplishment in accomplishments %}
+    <div class="flex ml-2 accomplishment">
+        <div class="py-1 text">{{ accomplishment.text }}</div>
+        <div class="py-1 {% if edit %} mr-2 {% endif %} difficulty-{{ accomplishment.difficulty_class }} difficulty">
+            {{ accomplishment.difficulty }} XP
+        </div>
+        {% if edit %}
+        <div class="flex-shrink-0 py-1 pl-2 text-sm italic border-l border-gray-300 border-solid">
+            <div>
+                <a class="text-red-700 underline hover:text-red-500"
+                    href="{{ url_for('main.delete_accomplishment', accomplishment_id=accomplishment.id) }}">delete</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
     <hr>
     {% else %}
     <div class="my-1 ml-2 text-sm accomplishment">
         {% if false %}
-        <!-- TODO: random text if no accomplishments -->{% endif %}
-        {% if is_today %}
+        <!-- TODO: random text if no accomplishments -->
+        {% endif %}
+        {% if day.is_today %}
         <p>No accomplishments today... yet!</p>
         {% else %}
         <p>Nothing logged that day... but it's okay to take a break!</p>
@@ -33,14 +54,13 @@
     </div>
     {% endfor %}
     <div class="flex justify-end my-1 ml-2 accomplishment">
-        <div><span class="pr-1 text-xs text-gray-700">total:</span> <span class="difficulty">{{ total }} XP</div>
+        <div><span class="pr-1 text-xs text-gray-700">total:</span> <span class="difficulty">{{ total_xp }} XP</div>
     </div>
     <div class="flex justify-between mt-2 text-sm accomplishment">
-        <div><a href="{{ url_for('main.index', day=yesterday) }}" class="text-blue-700">Previous day</a></div>
-        {% if tomorrow %}<a href="{{ url_for('main.index', day=tomorrow) }}" class="text-blue-700">Next day</a>
-    </div>{% endif %}
+        <div><a href="{{ links.yesterday }}" class="text-blue-700">Previous day</a></div>
+        {% if links.tomorrow %}<a href="{{ links.tomorrow }}" class="text-blue-700">Next day</a>
+        {% endif %}
+    </div>
 </div>
 
-</div>
-</div>
 {% endblock %}

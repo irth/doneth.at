@@ -22083,7 +22083,6 @@ form input[type=password]:focus {
 }
 
 form input[type=submit] {
-  width: 100%;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
@@ -22094,6 +22093,7 @@ form input[type=submit] {
 }
 
 form.auth-form input[type=submit] {
+  width: 100%;
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
@@ -22111,6 +22111,10 @@ form.auth-form input[type=submit] {
   background-color: rgba(72, 187, 120, var(--bg-opacity));
 }
 
+.accomplishment .text {
+  flex-grow: 1;
+}
+
 .accomplishment .difficulty {
   flex-shrink: 0;
   padding-left: 0.25rem;
@@ -22119,19 +22123,19 @@ form.auth-form input[type=submit] {
   min-width: 3em;
 }
 
-.accomplishment .difficulty-easy {
+.difficulty-easy {
   --text-opacity: 1;
   color: #2f855a;
   color: rgba(47, 133, 90, var(--text-opacity));
 }
 
-.accomplishment .difficulty-medium {
+.difficulty-medium {
   --text-opacity: 1;
   color: #c05621;
   color: rgba(192, 86, 33, var(--text-opacity));
 }
 
-.accomplishment .difficulty-hard {
+.difficulty-hard {
   --text-opacity: 1;
   color: #c53030;
   color: rgba(197, 48, 48, var(--text-opacity));

@@ -40,15 +40,19 @@ form input[type=password]:focus {
 }
 
 form input[type=submit] {
-    @apply w-full px-4 py-2 mt-2 font-bold rounded;
+    @apply px-4 py-2 mt-2 font-bold rounded;
 }
 
 form.auth-form input[type=submit] {
-    @apply text-white bg-blue-500;
+    @apply w-full text-white bg-blue-500;
 }
 
 .green-btn {
     @apply text-white bg-green-500;
+}
+
+.accomplishment .text {
+    @apply flex-grow;
 }
 
 .accomplishment .difficulty {
@@ -56,15 +60,15 @@ form.auth-form input[type=submit] {
     min-width: 3em;
 }
 
-.accomplishment .difficulty-easy {
+.difficulty-easy {
     @apply text-green-700;
 }
 
-.accomplishment .difficulty-medium {
+.difficulty-medium {
     @apply text-orange-700;
 }
 
-.accomplishment .difficulty-hard {
+.difficulty-hard {
     @apply text-red-700;
 }
 
