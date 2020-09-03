@@ -13,7 +13,7 @@
     </form>
 </div>
 <div class="max-w-lg mx-auto card">
-    <div class="flex items-baseline justify-between mb-4">
+    <div class="flex items-center justify-between mb-4">
         <div>
             <h3 class="text-2xl">{{ day.fancy }}</h3>
         </div>
@@ -22,9 +22,17 @@
         {% else %}
         {% if accomplishments %}
         <div><a href="{{ url_for('main.edit_day', day=day.string) }}" class="link">edit</a></div>
+        {% else %}
+        <div><a href="{{ url_for('main.add_day', day=day.string, from="top") }}" class="link">add</a></div>
         {% endif %}
         {% endif %}
     </div>
+    {% if edit %}
+    <div class="my-1 ml-2 text-sm accomplishment">
+        <div><a href="{{ url_for('main.add_day', day=day.string) }}" class="link">Add accomplishment</a></div>
+    </div>
+    <hr>
+    {% endif %}
     {% for accomplishment in accomplishments %}
     <div class="flex ml-2 accomplishment">
         <div class="py-1 text">{{ accomplishment.text }}</div>

@@ -1,8 +1,16 @@
 {% extends "_skel.html" %}
-{% block title %}Edit accomplishment{% endblock %}
+{% block title %}{% if not day %}Edit{% else %}Add{% endif %} accomplishment{% endblock %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
-<form method="POST" class="w-full max-w-lg mx-auto card">
+{% if day %}
+<div class="w-full max-w-lg mx-auto card">
+    <div class="text-xl text-center">
+        You're adding an accomplishment made on {{ day.fancy }}.
+    </div>
+</div>
+{% endif %}
+<form method="POST" class="w-full max-w-lg mx-auto card"
+    {% if day %}action="{{ url_for('main.add_day', day=day.string) }}" {% endif %}>
     {{ form.csrf_token }}
     {{ render_field(form.text) }}
     {{ render_field(form.difficulty) }}

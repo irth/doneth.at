@@ -1,5 +1,5 @@
 from . import timeutils
-from flask import Blueprint, render_template, redirect, url_for, abort
+from flask import Blueprint, render_template, redirect, url_for, abort, request
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
@@ -35,7 +35,7 @@ def handle_accomplishment_submission(form):
     return redirect(url_for('main.index'))
 
 
-def get_day_template_data(day_string):
+def parse_day(day_string):
     day_datetime = None
     if day_string == "today":
         day_datetime = timeutils.today()
@@ -43,6 +43,17 @@ def get_day_template_data(day_string):
         day_datetime = timeutils.from_str(day_string)
 
     day_string_clean = timeutils.as_str(day_datetime)
+    return {
+        "datetime": day_datetime,
+        "string": day_string_clean,
+        "fancy": timeutils.as_fancy_str(day_datetime),
+        "is_today": timeutils.is_today(day_datetime)
+    }
+
+
+def get_day_template_data(day_string):
+    day = parse_day(day_string)
+    day_datetime = day["datetime"]
 
     accomplishments = list(reversed(
         Accomplishment.get_day(current_user.id, day_datetime)))
@@ -54,18 +65,11 @@ def get_day_template_data(day_string):
         tomorrow = None
 
     return {
-        "day": {
-            "datetime": day_datetime,
-            "string": day_string_clean,
-            "fancy": timeutils.as_fancy_str(day_datetime),
-            "is_today": timeutils.is_today(day_datetime)
-        },
-
+        "day": day,
         "links": {
             "yesterday": url_for('main.index', day=timeutils.as_str(yesterday)),
             "tomorrow": url_for('main.index', day=timeutils.as_str(tomorrow)) if tomorrow is not None else None
         },
-
         "accomplishments": accomplishments,
         "total_xp": sum(a.difficulty for a in accomplishments),
     }
@@ -160,3 +164,34 @@ def edit_accomplishment(accomplishment_id):
         return redirect(back_url)
 
     return render_template('main/edit.html', form=form, cancel=back_url)
+
+
+@main.route('/day/<day>/add', methods=['GET', 'POST'])
+@login_required
+def add_day(day):
+    day_parsed = parse_day(day)
+    form = EditForm()
+
+    back_url = ""
+
+    from_top = ("from" in request.args) and ("top" in request.args["from"])
+    back_to_day = url_for('main.index', day=day_parsed["string"])
+    back_to_edit = url_for('main.edit_day', day=day_parsed["string"])
+
+    if form.validate_on_submit():
+        accomplishment = Accomplishment()
+        accomplishment.user_id = current_user.id
+        accomplishment.text = form.text.data
+        accomplishment.difficulty = form.difficulty.data
+        accomplishment.time = timeutils.from_str(day)
+        db.session.add(accomplishment)
+        db.session.commit()
+        return redirect(back_to_day)
+
+    return render_template(
+        'main/edit.html',
+        day=day_parsed,
+        form=form,
+        edit=True,
+        cancel=back_to_day if from_top else back_to_edit
+    )
