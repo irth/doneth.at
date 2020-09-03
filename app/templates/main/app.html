@@ -23,7 +23,9 @@
         {% if accomplishments %}
         <div><a href="{{ url_for('main.edit_day', day=day.string) }}" class="link">edit</a></div>
         {% else %}
+        {% if not day.is_today %}
         <div><a href="{{ url_for('main.add_day', day=day.string, from="top") }}" class="link">add</a></div>
+        {% endif %}
         {% endif %}
         {% endif %}
     </div>
