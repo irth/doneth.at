@@ -6,6 +6,7 @@ from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
 from .db import db, Accomplishment
 from datetime import datetime, timedelta
+import time
 
 main = Blueprint('main', __name__)
 
@@ -72,6 +73,7 @@ def get_day_template_data(day_string):
         },
         "accomplishments": accomplishments,
         "total_xp": sum(a.difficulty for a in accomplishments),
+        "ts": int(time.time()),  # timestamp for cachebusting
     }
 
 
