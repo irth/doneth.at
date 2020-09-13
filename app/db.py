@@ -1,3 +1,4 @@
+from sqlalchemy.sql import func
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -63,6 +64,11 @@ class Accomplishment(db.Model):
         return Accomplishment.query.filter(
             Accomplishment.time >= start, Accomplishment.time < end, Accomplishment.user_id == user_id).all()
 
+    def get_time_range_total(user_id, start, end):
+        result = db.session.query(func.sum(Accomplishment.difficulty).label('total')).filter(
+            Accomplishment.time >= start, Accomplishment.time < end, Accomplishment.user_id == user_id)[0][0]
+        return result if result is not None else 0
+
     @staticmethod
     def get_day(user_id, day):
         # TODO: allow setting custom "start of day" hour
@@ -70,7 +76,17 @@ class Accomplishment(db.Model):
         end = timeutils.day_after(day)
         return Accomplishment.get_time_range(user_id, start, end)
 
+    def get_day_total(user_id, day):
+        start = timeutils.day(day)
+        end = timeutils.day_after(day)
+        return Accomplishment.get_time_range_total(user_id, start, end)
+
     @staticmethod
     def get_today(user_id):
         today = datetime.now()
         return Accomplishment.get_day(user_id, today)
+
+    @staticmethod
+    def get_today_total(user_id):
+        today = datetime.now()
+        return Accomplishment.get_day_total(user_id, today)

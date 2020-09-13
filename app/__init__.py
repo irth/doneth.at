@@ -28,4 +28,7 @@ def create_app():
     from . import stats
     app.register_blueprint(stats.blueprint)
 
+    from . import graph
+    app.register_blueprint(graph.blueprint)
+
     return app
