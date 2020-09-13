@@ -23,7 +23,7 @@ def graph_svg():
 
     print(accomplishments)
 
-    return render_template('graph.svg', days=days, **gen_graph_data(accomplishments)), 200, {'Content-Type': 'image/svg+xml'}
+    return render_template('graph.svg', days=days, **gen_graph_data(accomplishments)), 200, {'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-cache'}
 
 
 def gen_scale(base=10):
