@@ -1,5 +1,5 @@
 {% macro x(n) -%}
-{{ 15+((85-15)/(lines|length))*(n-1) }}%
+{{ 15+((91-15)/(lines|length))*(n-1) }}%
 {%- endmacro %}
 <svg version="1.1"
      baseProfile="full"
@@ -11,7 +11,7 @@
     </style>
     <g class="bg">
     {% for n in scale %}
-        <line x1="10%" y1="{{ 16.6 * loop.index }}%" x2="90%" y2="{{ 16.6 * loop.index }}%" stroke="#ddd" stroke-width="2px" />
+        <line x1="10%" y1="{{ 16.6 * loop.index }}%" x2="96%" y2="{{ 16.6 * loop.index }}%" stroke="#ddd" stroke-width="2px" />
     {% endfor %}
     </g>
     <g class="legend" style="font-size: 0.9em; text-align:right;">
