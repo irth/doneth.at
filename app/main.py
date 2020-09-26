@@ -114,8 +114,8 @@ def delete_accomplishment(accomplishment_id):
     if a.user_id != current_user.id:
         abort(403)
 
-    # TODO: fix: we're using from_str when it's a datetime in the db? it works on sqlite but
-    back_url = url_for('main.edit_day', day=Day.from_str(a.time, user).url)
+    back_url = url_for('main.edit_day', day=Day.from_timestamp(
+        a.time, current_user).url)
 
     form = DeleteForm()
     if form.validate_on_submit():
