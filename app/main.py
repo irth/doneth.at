@@ -149,7 +149,7 @@ def edit_accomplishment(accomplishment_id):
     if a.user_id != current_user.id:
         abort(403)
 
-    back_url = url_for('main.edit_day', day=Day.from_str(
+    back_url = url_for('main.edit_day', day=Day.from_timestamp(
         a.time, current_user).url)
 
     form = EditForm(obj=a)

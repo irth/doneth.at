@@ -13,12 +13,15 @@ class Day:
 
     @staticmethod
     def from_str(string, user):
-        return Day._from_timestamp(datetime.strptime(string, "%Y-%m-%d"), user)
+        return Day.from_timestamp(datetime.strptime(string, "%Y-%m-%d"), user)
 
     @staticmethod
-    def _from_timestamp(timestamp, user):
-        # not exposed because it is only an utilty function, not aware of the
-        # user's time zone and start-of-day hour
+    def from_timestamp(timestamp, user):
+        """
+        This function is NOT meant to be aware of timezones etc, you should
+        only use it to handle data stored in the database, in the format of the
+        output of the ".timestamp" property.
+        """
         return Day(timestamp.year, timestamp.month, timestamp.day, user)
 
     def __eq__(self, other):
@@ -33,14 +36,14 @@ class Day:
             raise TypeError(
                 'Unsupported operands for "+". The right hand side needs to be a number.')
         else:
-            return Day._from_timestamp(self.timestamp + timedelta(days=other), self.user)
+            return Day.from_timestamp(self.timestamp + timedelta(days=other), self.user)
 
     def __sub__(self, other):
         if not isinstance(other, int):
             raise TypeError(
                 'Unsupported operands for "-". The right hand side needs to be a number.')
         else:
-            return Day._from_timestamp(self.timestamp + timedelta(days=-other), self.user)
+            return Day.from_timestamp(self.timestamp + timedelta(days=-other), self.user)
 
     def __lt__(self, other): return self.timestamp < other.timestamp
     def __gt__(self, other): return self.timestamp > other.timestamp
