@@ -31,8 +31,8 @@
         sizes="196x196">
     <link rel="icon" type="image/png" href="{{ static_url_for('static', filename='icons/icon-256.png') }}"
         sizes="256x256">
-    <link rel="icon" type="image/png" href="{{ static_url_for('static', filename='icons/icon-228.png') }}" <link
-        rel="icon" type="image/png" href="{{ static_url_for('static', filename='icons/icon-512.png') }}"
+    <link rel="icon" type="image/png" href="{{ static_url_for('static', filename='icons/icon-228.png') }}">
+    <link rel="icon" type="image/png" href="{{ static_url_for('static', filename='icons/icon-512.png') }}"
         sizes="512x512">
     <link rel="shortcut icon" href="{{ static_url_for('static', filename='icons/favicon.ico') }}">
     {% endblock %}
@@ -47,7 +47,10 @@
             {% if current_user.is_authenticated %}
             <p>Hi <span class="font-mono">{{ current_user.username }}</span>!</p>
             <p>
-                <a class="text-xs link" href="{{ url_for('auth.logout') }}">Log out.</a>
+                <span class="pr-1"><a class="text-xs link" href="{{ url_for('main.index') }}">Home</a></span>
+                <span class="px-1"><a class="text-xs link" href="{{ url_for('settings.settings') }}">Settings</a></span>
+                <span class="pl-1"><a class="text-xs link" href="{{ url_for('auth.logout') }}">Log
+                        out</a></span>
             </p>
             {% endif %}
             {% endblock %}

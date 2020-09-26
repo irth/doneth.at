@@ -9,7 +9,9 @@ body {
 }
 
 form input[type=text],
-form input[type=password] {
+form input[type=password],
+form input[type=number],
+form select {
     @apply shadow;
     @apply appearance-none;
     @apply border;
@@ -19,6 +21,12 @@ form input[type=password] {
     @apply px-3;
     @apply text-gray-700;
     @apply leading-tight;
+}
+
+form input:focus,
+form select:focus {
+    @apply outline-none;
+    @apply shadow-outline;
 }
 
 form div.error input {

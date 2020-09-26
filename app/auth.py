@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, redirect
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional
 from flask_login import LoginManager, login_user, logout_user
 import sqlalchemy.exc
 from .db import db, User
+
+import pytz
 
 blueprint = Blueprint('auth', __name__)
 login_manager = LoginManager()
@@ -24,6 +26,12 @@ class SignupForm(FlaskForm):
         'Username',
         validators=[DataRequired(), Length(min=2), Length(max=64)]
     )
+
+    tz = SelectField('Timezone', choices=list(map(lambda x: (x, x.replace("_", " ")), pytz.all_timezones)),
+                     validators=[
+                         DataRequired()
+    ])
+
     password = PasswordField(
         'Password',
         validators=[
@@ -32,6 +40,7 @@ class SignupForm(FlaskForm):
             DataRequired()
         ]
     )
+
     confirm = PasswordField(
         'Confirm password',
         validators=[
@@ -39,6 +48,7 @@ class SignupForm(FlaskForm):
             EqualTo('password', message='Passwords do not match')
         ]
     )
+
     submit = SubmitField('Register')
 
 
@@ -64,6 +74,8 @@ def register():
     if form.validate_on_submit():
         user = User(username=form.username.data)
         user.set_password(form.password.data)
+        user.timezone = form.tz.data
+        user.start_of_day = 2
         try:
             db.session.add(user)
             db.session.commit()

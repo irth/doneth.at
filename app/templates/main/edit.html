@@ -5,12 +5,12 @@
 {% if day %}
 <div class="w-full max-w-lg mx-auto card">
     <div class="text-xl text-center">
-        You're adding an accomplishment made on {{ day.fancy }}.
+        You're adding an accomplishment made on {{ day.pretty }}.
     </div>
 </div>
 {% endif %}
-<form method="POST" class="w-full max-w-lg mx-auto card"
-    {% if day %}action="{{ url_for('main.add_day', day=day.string) }}" {% endif %}>
+<form method="POST" class="w-full max-w-lg mx-auto card" {% if day %}action="{{ url_for('main.add_day', day=day.url) }}"
+    {% endif %}>
     {{ form.csrf_token }}
     {{ render_field(form.text) }}
     {{ render_field(form.difficulty) }}

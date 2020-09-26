@@ -1,15 +1,27 @@
 {% extends "_skel.html" %}
 {% block title %}Register{% endblock %}
-{% block header_width %}max-w-xs{% endblock %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
-<div class="w-full max-w-xs mx-auto">
-    <form method="POST" class="card auth-form">
+<div class="w-full max-w-lg mx-auto card">
+    <form method="POST" class="w-full max-w-xs mx-auto auth-form">
         {{ form.csrf_token }}
         {{ render_field(form.username) }}
+        {{ render_field(form.tz) }}
         {{ render_field(form.password) }}
         {{ render_field(form.confirm) }}
         {{ render_field(form.submit, False) }}
     </form>
 </div>
+
+<script>
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var matched = Array.prototype.filter.call(
+        document.getElementById("tz").options,
+        (a) => a.value == tz
+    )
+    if (matched.length > 0) {
+        document.getElementById("tz").value = matched[0].value
+    }
+</script>
+
 {% endblock %}

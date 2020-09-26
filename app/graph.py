@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from .db import db, Accomplishment
-from . import timeutils
-
+from .days import Day
 
 blueprint = Blueprint('graph', __name__)
 
@@ -13,15 +12,13 @@ def graph_svg():
     count = 7
     accomplishments = [0]*count
     days = [""]*count
-    day = timeutils.today()
+    day = Day.today(current_user)
 
     for i in range(1, count+1):
-        total_xp = Accomplishment.get_day_total(current_user.id, day)
+        total_xp = Accomplishment.get_day_total(current_user, day)
         accomplishments[-i] = total_xp
-        days[-i] = day.strftime('%a')[:2]
-        day = timeutils.day_before(day)
-
-    print(accomplishments)
+        days[-i] = day.timestamp.strftime('%a')[:2]
+        day -= 1
 
     return render_template('graph.svg', days=days, **gen_graph_data(accomplishments)), 200, {'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-cache'}
 

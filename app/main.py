@@ -1,4 +1,3 @@
-from . import timeutils
 from flask import Blueprint, render_template, redirect, url_for, abort, request
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
@@ -7,6 +6,7 @@ from wtforms.validators import DataRequired, Length, NumberRange
 from .db import db, Accomplishment
 from datetime import datetime, timedelta
 import time
+from .days import Day
 
 main = Blueprint('main', __name__)
 
@@ -30,46 +30,39 @@ def handle_accomplishment_submission(form):
         accomplishment.difficulty = 10
     elif form.submit_15.data:
         accomplishment.difficulty = 15
-    # the timestamp should be set by the database
+    accomplishment.time = Day.today(current_user).timestamp
     db.session.add(accomplishment)
     db.session.commit()
     return redirect(url_for('main.index'))
 
 
-def parse_day(day_string):
-    day_datetime = None
+def parse_day(day_string, user):
+    day = None
     if day_string == "today":
-        day_datetime = timeutils.today()
+        day = Day.today(user)
     else:
-        day_datetime = timeutils.from_str(day_string)
+        day = Day.from_str(day_string, user)
 
-    day_string_clean = timeutils.as_str(day_datetime)
-    return {
-        "datetime": day_datetime,
-        "string": day_string_clean,
-        "fancy": timeutils.as_fancy_str(day_datetime),
-        "is_today": timeutils.is_today(day_datetime)
-    }
+    return day
 
 
-def get_day_template_data(day_string):
-    day = parse_day(day_string)
-    day_datetime = day["datetime"]
+def get_day_template_data(day_string, user):
+    day = parse_day(day_string, user)
 
     accomplishments = list(reversed(
-        Accomplishment.get_day(current_user.id, day_datetime)))
+        Accomplishment.get_day(current_user, day)))
     total = sum(a.difficulty for a in accomplishments)
 
-    yesterday = timeutils.day_before(day_datetime)
-    tomorrow = timeutils.day_after(day_datetime)
-    if timeutils.is_future(tomorrow):
+    yesterday = day - 1
+    tomorrow = day + 1
+    if tomorrow.is_future:
         tomorrow = None
 
     return {
         "day": day,
         "links": {
-            "yesterday": url_for('main.index', day=timeutils.as_str(yesterday)),
-            "tomorrow": url_for('main.index', day=timeutils.as_str(tomorrow)) if tomorrow is not None else None
+            "yesterday": url_for('main.index', day=yesterday.url),
+            "tomorrow": url_for('main.index', day=tomorrow.url) if tomorrow is not None else None
         },
         "accomplishments": accomplishments,
         "total_xp": sum(a.difficulty for a in accomplishments),
@@ -81,6 +74,7 @@ def get_day_template_data(day_string):
 @main.route('/day/<day>')
 def index(day):
     if not current_user.is_authenticated:
+        # TODO: handle the case when the user is on /day/<something> and is not logged in
         return render_template('index.html')
 
     form = NewAccomplishementForm()
@@ -90,7 +84,7 @@ def index(day):
     return render_template(
         'main/app.html',
         form=form,
-        **get_day_template_data(day)
+        **get_day_template_data(day, current_user)
     )
 
 
@@ -105,7 +99,7 @@ def edit_day(day):
         'main/app.html',
         form=form,
         edit=True,
-        **get_day_template_data(day)
+        **get_day_template_data(day, current_user)
     )
 
 
@@ -120,8 +114,8 @@ def delete_accomplishment(accomplishment_id):
     if a.user_id != current_user.id:
         abort(403)
 
-    back_url = url_for(
-        'main.edit_day', day=timeutils.as_str(timeutils.day(a.time)))
+    # TODO: fix: we're using from_str when it's a datetime in the db? it works on sqlite but
+    back_url = url_for('main.edit_day', day=Day.from_str(a.time, user).url)
 
     form = DeleteForm()
     if form.validate_on_submit():
@@ -155,8 +149,8 @@ def edit_accomplishment(accomplishment_id):
     if a.user_id != current_user.id:
         abort(403)
 
-    back_url = url_for(
-        'main.edit_day', day=timeutils.as_str(timeutils.day(a.time)))
+    back_url = url_for('main.edit_day', day=Day.from_str(
+        a.time, current_user).url)
 
     form = EditForm(obj=a)
     if form.validate_on_submit():
@@ -171,28 +165,34 @@ def edit_accomplishment(accomplishment_id):
 @main.route('/day/<day>/add', methods=['GET', 'POST'])
 @login_required
 def add_day(day):
-    day_parsed = parse_day(day)
+    day = parse_day(day, current_user)
     form = EditForm()
 
     back_url = ""
 
     from_top = ("from" in request.args) and ("top" in request.args["from"])
-    back_to_day = url_for('main.index', day=day_parsed["string"])
-    back_to_edit = url_for('main.edit_day', day=day_parsed["string"])
+    # to the bottom
+    # bottom to top I stop
+    # at the core I've forgotten
+    # in the middle of my thoughts
+    # taken far from my safety
+    # the picture is there
+    back_to_day = url_for('main.index', day=day.url)
+    back_to_edit = url_for('main.edit_day', day=day.url)
 
     if form.validate_on_submit():
         accomplishment = Accomplishment()
         accomplishment.user_id = current_user.id
         accomplishment.text = form.text.data
         accomplishment.difficulty = form.difficulty.data
-        accomplishment.time = timeutils.from_str(day)
+        accomplishment.time = day.timestamp
         db.session.add(accomplishment)
         db.session.commit()
         return redirect(back_to_day)
 
     return render_template(
         'main/edit.html',
-        day=day_parsed,
+        day=day,
         form=form,
         edit=True,
         cancel=back_to_day if from_top else back_to_edit

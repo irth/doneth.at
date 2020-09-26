@@ -5,8 +5,7 @@ from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from datetime import datetime, timedelta
-
-from . import timeutils
+from .days import Day
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -21,13 +20,17 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    created_on = db.Column(db.DateTime, index=False,
-                           unique=False, nullable=True)
-    last_login = db.Column(db.DateTime, index=False,
-                           unique=False, nullable=True)
+    created_on = db.Column(db.DateTime, index=False, unique=False,
+                           nullable=True, server_default=db.func.now())
+    last_login = db.Column(db.DateTime, index=False, unique=False,
+                           nullable=True)  # TODO: set on login? or remove?
 
     accomplishments = db.relationship(
         'Accomplishment', backref='user', lazy=True)
+
+    # TODO: set user timezone from geoip on registration
+    timezone = db.Column(db.String(64), nullable=False)
+    start_of_day = db.Column(db.Integer, nullable=False)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -42,8 +45,9 @@ class User(UserMixin, db.Model):
 class Accomplishment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    time = db.Column(db.DateTime(), nullable=False,
-                     default=db.func.current_timestamp())
+    created_on = db.Column(db.DateTime, index=False, unique=False,
+                           nullable=True, server_default=db.func.now())
+    time = db.Column(db.DateTime(), nullable=False)
     text = db.Column(db.String(256), nullable=False)
     difficulty = db.Column(db.Integer)
 
@@ -60,33 +64,35 @@ class Accomplishment(db.Model):
         return "hard"
 
     @staticmethod
-    def get_time_range(user_id, start, end):
+    def get_time_range(user, start: datetime, end: datetime):
         return Accomplishment.query.filter(
-            Accomplishment.time >= start, Accomplishment.time < end, Accomplishment.user_id == user_id).all()
+            Accomplishment.time >= start, Accomplishment.time < end, Accomplishment.user_id == user.id).all()
 
-    def get_time_range_total(user_id, start, end):
+    @staticmethod
+    def get_time_range_total(user, start: datetime, end: datetime):
         result = db.session.query(func.sum(Accomplishment.difficulty).label('total')).filter(
-            Accomplishment.time >= start, Accomplishment.time < end, Accomplishment.user_id == user_id)[0][0]
+            Accomplishment.time >= start, Accomplishment.time < end, Accomplishment.user_id == user.id)[0][0]
         return result if result is not None else 0
 
     @staticmethod
-    def get_day(user_id, day):
+    def get_day(user, day: Day):
         # TODO: allow setting custom "start of day" hour
-        start = timeutils.day(day)
-        end = timeutils.day_after(day)
-        return Accomplishment.get_time_range(user_id, start, end)
-
-    def get_day_total(user_id, day):
-        start = timeutils.day(day)
-        end = timeutils.day_after(day)
-        return Accomplishment.get_time_range_total(user_id, start, end)
+        start = day.timestamp
+        end = (day + 1).timestamp
+        return Accomplishment.get_time_range(user, start, end)
 
     @staticmethod
-    def get_today(user_id):
-        today = datetime.now()
-        return Accomplishment.get_day(user_id, today)
+    def get_day_total(user, day: Day):
+        start = day.timestamp
+        end = (day + 1).timestamp
+        return Accomplishment.get_time_range_total(user, start, end)
 
     @staticmethod
-    def get_today_total(user_id):
-        today = datetime.now()
-        return Accomplishment.get_day_total(user_id, today)
+    def get_today(user):
+        today = Day.today(user)
+        return Accomplishment.get_day(user, today)
+
+    @staticmethod
+    def get_today_total(user):
+        today = Day.today(user)
+        return Accomplishment.get_day_total(user, today)

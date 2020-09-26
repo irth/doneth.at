@@ -1,5 +1,5 @@
 {% extends "_skel.html" %}
-{% block title %}{{ day.fancy }}{% endblock %}
+{% block title %}{{ day.pretty }}{% endblock %}
 {% block content %}
 <div class="max-w-xl mx-auto card">
     <form method="POST" action="{{ url_for('main.index') }}">
@@ -18,23 +18,23 @@
 <div class="max-w-lg mx-auto card">
     <div class="flex items-center justify-between mb-4">
         <div>
-            <h3 class="text-2xl">{{ day.fancy }}</h3>
+            <h3 class="text-2xl">{{ day.pretty }}</h3>
         </div>
         {% if edit %}
-        <div><a href="{{ url_for('main.index', day=day.string) }}" class="link">done</a></div>
+        <div><a href="{{ url_for('main.index', day=day.url) }}" class="link">done</a></div>
         {% else %}
         {% if accomplishments %}
-        <div><a href="{{ url_for('main.edit_day', day=day.string) }}" class="link">edit</a></div>
+        <div><a href="{{ url_for('main.edit_day', day=day.url) }}" class="link">edit</a></div>
         {% else %}
         {% if not day.is_today %}
-        <div><a href="{{ url_for('main.add_day', day=day.string, from="top") }}" class="link">add</a></div>
+        <div><a href="{{ url_for('main.add_day', day=day.url, from="top") }}" class="link">add</a></div>
         {% endif %}
         {% endif %}
         {% endif %}
     </div>
     {% if edit %}
     <div class="my-1 ml-2 text-sm accomplishment">
-        <div><a href="{{ url_for('main.add_day', day=day.string) }}" class="link">Add accomplishment</a></div>
+        <div><a href="{{ url_for('main.add_day', day=day.url) }}" class="link">Add accomplishment</a></div>
     </div>
     <hr>
     {% endif %}

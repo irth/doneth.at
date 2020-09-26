@@ -31,4 +31,7 @@ def create_app():
     from . import graph
     app.register_blueprint(graph.blueprint)
 
+    from . import settings
+    app.register_blueprint(settings.blueprint)
+
     return app
