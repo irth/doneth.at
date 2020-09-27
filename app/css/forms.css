@@ -1,0 +1,89 @@
+.form {
+    @apply w-full;
+    @apply mx-auto;
+    &.form-narrow {
+        @apply max-w-xs;
+    }
+}
+
+
+.btn, input:not([type=submit]), select {
+    @apply shadow;
+    @apply appearance-none;
+    @apply outline-none;
+    @apply rounded;
+    @apply py-2;
+    @apply px-3;
+    @apply block;
+    @apply text-gray-700;
+    @apply leading-tight;
+    @apply transition-all;
+    @apply duration-75;
+
+    &:focus {
+        @apply shadow-outline;
+    }
+}
+
+
+input:not([type=submit]), select {
+    @apply w-full;
+    /* rounded borders look weird on buttons in firefox, so we only apply that here  */
+    @apply border-gray-300;
+    @apply border;
+    @apply mx-auto;
+}
+
+
+
+.input[type=submit] {
+    @apply bg-none;
+}
+
+.btn, input[type="submit"] {
+    @apply border-none;
+
+    &.btn-blue {
+        @apply text-white;
+        @apply bg-blue-600;
+        &:hover { @apply bg-blue-800; }
+        &:focus { @apply bg-blue-900; }
+    }
+
+    &.btn-green {
+        @apply text-white;
+        @apply bg-green-500;
+        &:hover { @apply bg-green-600; }
+        &:focus { @apply bg-green-700; }
+    }
+
+    &.btn-orange {
+        @apply text-white;
+        @apply bg-orange-500;
+        &:hover { @apply bg-orange-600; }
+        &:focus { @apply bg-orange-700; }
+    }
+
+    &.btn-red {
+        @apply text-white;
+        @apply bg-red-500;
+        &:hover { @apply bg-red-600; }
+        &:focus { @apply bg-red-700; }
+    }
+
+    &.btn-wide {
+        @apply px-6;
+    }
+
+    &.btn-inline {
+        @apply inline-block;
+    }
+
+
+    &.btn-center { @apply mx-auto; }
+}
+
+.field.error input {
+    @apply border-red-500;
+}
+

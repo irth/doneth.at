@@ -1,14 +1,15 @@
 {% extends "_skel.html" %}
+{% from "_formhelpers.html" import render_field %}
 {% block title %}{{ day.pretty }}{% endblock %}
 {% block content %}
 <div class="max-w-xl mx-auto card">
-    <form method="POST" action="{{ url_for('main.index') }}">
+    <form method="POST" action="{{ url_for('main.index') }}" class="form">
         {{ form.csrf_token }}
-        {{ form.text(placeholder="What did you accomplish today?", class_="placeholder-black", autofocus=True) }}
-        <div class="flex mt-1">
-            {{ form.submit_5(class_="w-1/3 mr-1 green-btn") }}
-            {{ form.submit_10(class_="w-1/3 mx-1 orange-btn") }}
-            {{ form.submit_15(class_="w-1/3 ml-1 red-btn") }}
+        {{ render_field(form.text, label=False, mb=False, placeholder="What did you accomplish today?", class_="placeholder-black w-full", autofocus=True) }}
+        <div class="flex mt-3">
+            {{ form.submit_5(class_="w-1/3 mr-1 btn btn-green") }}
+            {{ form.submit_10(class_="w-1/3 mx-1 btn btn-orange") }}
+            {{ form.submit_15(class_="w-1/3 ml-1 btn btn-red") }}
         </div>
     </form>
 </div>

@@ -1,0 +1,21 @@
+.accomplishment .text {
+    @apply flex-grow;
+}
+
+.accomplishment .difficulty {
+    @apply flex-shrink-0 pl-1 font-bold text-right;
+    min-width: 3em;
+}
+
+.difficulty-easy {
+    @apply text-green-700;
+}
+
+.difficulty-medium {
+    @apply text-orange-700;
+}
+
+.difficulty-hard {
+    @apply text-red-700;
+}
+

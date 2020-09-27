@@ -2,14 +2,14 @@
 {% block title %}Register{% endblock %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
-<div class="w-full max-w-lg mx-auto card">
-    <form method="POST" class="w-full max-w-xs mx-auto auth-form">
+<div class="section card">
+    <form method="POST" class="form form-narrow">
         {{ form.csrf_token }}
         {{ render_field(form.username) }}
         {{ render_field(form.tz) }}
         {{ render_field(form.password) }}
         {{ render_field(form.confirm) }}
-        {{ render_field(form.submit, False) }}
+        {{ render_field(form.submit, False, class_="btn btn-blue btn-wide btn-center") }}
     </form>
 </div>
 

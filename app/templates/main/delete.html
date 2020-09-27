@@ -1,7 +1,8 @@
 {% extends "_skel.html" %}
+{% from "_formhelpers.html" import render_field %}
 {% block title %}Delete accomplishment{% endblock %}
 {% block content %}
-<div class="max-w-xl mx-auto text-center card">
+<div class="text-center section card">
     <p class="italic">
         {{ accomplishment.text }}
     </p>
@@ -9,12 +10,12 @@
         XP)
     </p>
 </div>
-<div class="max-w-lg mx-auto text-center card">
+<div class="text-center section card">
     <h3 class="text-lg">Are you sure you want to remove this accomplishment?</h3>
-    <form class="mt-2" method="POST">
+    <form class="mt-3" method="POST">
         {{ form.csrf_token }}
-        {{ form.submit(class_="hover:bg-red-500 bg-red-700 text-white") }}
-        <a href="{{ cancel }}" class="block mt-2 text-sm text-blue-700 hover:text-blue-500">cancel</a>
+        {{ render_field(form.submit, label=False, mb="mb-2", class_="btn btn-red btn-wide btn-center") }}
+        <a href="{{ cancel }}" class="block text-xs link">cancel</a>
     </form>
 </div>
 {% endblock %}

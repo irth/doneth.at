@@ -3,20 +3,22 @@
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
 {% if day %}
-<div class="w-full max-w-lg mx-auto card">
+<div class="section card">
     <div class="text-xl text-center">
         You're adding an accomplishment made on {{ day.pretty }}.
     </div>
 </div>
 {% endif %}
-<form method="POST" class="w-full max-w-lg mx-auto card" {% if day %}action="{{ url_for('main.add_day', day=day.url) }}"
-    {% endif %}>
-    {{ form.csrf_token }}
-    {{ render_field(form.text) }}
-    {{ render_field(form.difficulty) }}
-    <div class="text-center">
-        {{ render_field(form.submit, False, class_="bg-blue-700 text-white hover:bg-blue-500") }}
-        <a href="{{ cancel }}" class="block mt-2 text-sm text-blue-700 hover:text-blue-500">cancel</a>
-    </div>
-</form>
+<div class="section card">
+    <form method="POST" class="form form-narrow" {% if day %}action="{{ url_for('main.add_day', day=day.url) }}"
+        {% endif %}>
+        {{ form.csrf_token }}
+        {{ render_field(form.text) }}
+        {{ render_field(form.difficulty, mb="mb-6") }}
+        <div class="text-center">
+            {{ render_field(form.submit, False, mb="mb-1", class_="btn btn-blue btn-center btn-wide") }}
+            <a href="{{ cancel }}" class="text-xs link">cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

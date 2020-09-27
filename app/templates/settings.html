@@ -2,13 +2,13 @@
 {% block title %}Settings{% endblock %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
-<div class="w-full max-w-lg mx-auto card">
+<div class="section card">
     <!-- TODO: this shouldn't use the auth-form class, that class should be generalized -->
-    <form method="POST" class="max-w-xs mx-auto auth-form">
+    <form method="POST" class="form form-narrow">
         {{ form.csrf_token }}
         {{ render_field(form.timezone) }}
         {{ render_field(form.start_of_day, description="This is useful if you often work after midnight. If you set it to e.g. 2, all accomplishments made before 2 AM will be considered to be made on the previous day.") }}
-        {{ render_field(form.submit, False) }}
+        {{ render_field(form.submit, False, class_="btn btn-blue btn-wide btn-center") }}
         {% if success %}<p class="text-center text-green-800">Saved successfuly.</p>{% endif %}
     </form>
 </div>

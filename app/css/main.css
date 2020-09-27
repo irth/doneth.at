@@ -1,126 +1,21 @@
-@tailwind base;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-@tailwind components;
-
-@tailwind utilities;
+@import 'accomplishments.css';
+@import 'common.css';
+@import 'forms.css';
 
 body {
     @apply bg-gray-200;
 }
 
-form input[type=text],
-form input[type=password],
-form input[type=number],
-form select {
-    @apply shadow;
-    @apply appearance-none;
-    @apply border;
-    @apply rounded;
-    @apply w-full;
-    @apply py-2;
-    @apply px-3;
-    @apply text-gray-700;
-    @apply leading-tight;
-}
-
-form input:focus,
-form select:focus {
-    @apply outline-none;
-    @apply shadow-outline;
-}
-
-form div.error input {
-    @apply border-red-500;
-}
-
-form div.error ul.errors {
-    @apply pt-1 pl-1;
-}
-
-form div.error ul.errors li {
-    @apply text-xs italic text-red-500;
-}
-
-form input[type=text]:focus,
-form input[type=password]:focus {
-    @apply outline-none;
-    @apply shadow-outline;
-}
-
-form input[type=submit] {
-    @apply px-4 py-2 mt-2 font-bold rounded;
-}
-
-form.auth-form input[type=submit] {
-    @apply w-full text-white bg-blue-500;
-}
-
-.green-btn {
-    @apply text-white bg-green-500;
-}
-
-.accomplishment .text {
-    @apply flex-grow;
-}
-
-.accomplishment .difficulty {
-    @apply flex-shrink-0 pl-1 font-bold text-right;
-    min-width: 3em;
-}
-
-.difficulty-easy {
-    @apply text-green-700;
-}
-
-.difficulty-medium {
-    @apply text-orange-700;
-}
-
-.difficulty-hard {
-    @apply text-red-700;
-}
-
-.green-btn:hover {
-    @apply bg-green-700;
-}
-
-.orange-btn {
-    @apply text-white bg-orange-500;
-}
-
-.orange-btn:hover {
-    @apply bg-orange-700;
-}
-
-.red-btn {
-    @apply text-white bg-red-500;
-}
-
-.red-btn:hover {
-    @apply bg-red-700;
-}
-
-
-form.auth-form input[type=submit]:hover {
-    @apply bg-blue-700;
-}
-
-form input[type=submit]:focus {
-    @apply shadow-outline outline-none;
-}
-
-.link {
-    @apply text-blue-700 underline;
-}
-
-.link:hover {
-    @apply text-blue-500;
-}
-
-.card {
-    @apply px-8 pt-6 pb-6 mt-4 mb-4 bg-white rounded shadow-md;
-}
-
-.auth-form.card {
-    @apply pb-4;
+.screencap {
+    @apply overflow-hidden;
+    @apply border-2;
+    @apply border-black;
+    @apply border-gray-500;
+    @apply border-solid;
+    @apply rounded-lg;
+    @apply shadow-xl;
 }

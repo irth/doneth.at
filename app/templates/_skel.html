@@ -52,6 +52,12 @@
                 <span class="pl-1"><a class="text-xs link" href="{{ url_for('auth.logout') }}">Log
                         out</a></span>
             </p>
+            {% else %}
+            <p>
+                <span class="pr-1"><a class="text-xs link" href="{{ url_for('main.index') }}">Home</a></span>
+                <span class="px-1"><a class="text-xs link" href="{{ url_for('auth.login') }}">Log in</a></span>
+                <span class="pl-1"><a class="text-xs link" href="{{ url_for('auth.register') }}">Register</a></span>
+            </p>
             {% endif %}
             {% endblock %}
         </div>

@@ -1,8 +1,9 @@
-{% macro render_field(field, label=True, wrapper_class="", description="") %}
-<div class="mb-4 {% if field.errors %}error{% endif %} {{ wrapper_class }}">
-    <label for="{{ field.id }}"
-        class="block text-sm font-bold text-gray-700">{% if label %}{{ field.label }}{% endif %}</label>
+{% macro render_field(field, label=True, mb="mb-4", wrapper_class="", description="") %}
+<div class="field {% if field.errors %}error{% endif %} {% if mb %} {{ mb }} {% endif %} {{ wrapper_class }}">
+    {% if label %}
+    <label for="{{ field.id }}" class="block text-sm font-bold text-gray-700">{{ field.label }}</label>
     <div class="mb-2 text-xs text-gray-700">{{ description }}</div>
+    {% endif %}
     {% if field.type == "SelectField" %}
     <div class="relative">
         {{ field(**kwargs)|safe }}
@@ -15,7 +16,7 @@
     {{ field(**kwargs)|safe }}
     {% endif %}
     {% if field.errors %}
-    <ul class="errors">
+    <ul class="pl-1 mt-2 text-xs text-red-700 errors">
         {% for error in field.errors %}
         <li>{{ error }}</li>
         {% endfor %}

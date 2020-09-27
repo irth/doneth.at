@@ -1,0 +1,29 @@
+.section {
+    @apply w-full;
+    @apply max-w-lg;
+    @apply m-auto;
+    &.section-wider {
+        @apply max-w-xl;
+    }
+}
+
+
+.card {
+    @apply px-8;
+    @apply pt-6;
+    @apply pb-6;
+    @apply my-4;
+    @apply bg-white;
+    @apply rounded;
+    @apply shadow-md;
+}
+
+
+.link {
+    @apply text-blue-700;
+    @apply underline;
+
+    &:hover {
+        @apply text-blue-500;
+    }
+}

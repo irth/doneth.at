@@ -1,13 +1,17 @@
 {
-  "dependencies": {
-    "tailwindcss": "^1.7.5"
-  },
-  "scripts": {
-    "build": "tailwindcss build app/css/main.css -o app/static/style.css"
-  },
-  "name": "donethat-backend",
-  "version": "0.0.1",
-  "main": "index.js",
-  "author": "Wojciech Kwolek <me@irth.pl>",
-  "license": "MIT"
+    "dependencies": {
+        "cssnano": "^4.1.10",
+        "postcss-cli": "^8.0.0",
+        "postcss-import": "^12.0.1",
+        "postcss-nested": "4.2.3",
+        "tailwindcss": "^1.7.5"
+    },
+    "scripts": {
+        "build": "postcss app/css/main.css --output app/static/style.css"
+    },
+    "name": "donethat-backend",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "Wojciech Kwolek <me@irth.pl>",
+    "license": "MIT"
 }
