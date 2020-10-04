@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, abort, request
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField
+from wtforms.fields.html5 import IntegerField
+from wtforms.widgets.html5 import NumberInput
 from wtforms.validators import DataRequired, Length, NumberRange
 from .db import db, Accomplishment
 from datetime import datetime, timedelta
@@ -137,6 +139,7 @@ class EditForm(FlaskForm):
     )
     difficulty = IntegerField(
         'Difficulty (XP)',
+        widget=NumberInput(min=-100, max=100),
         validators=[DataRequired(), NumberRange(max=100, min=-100)]
     )
     submit = SubmitField('Save')

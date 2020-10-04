@@ -14,7 +14,7 @@
         {% endif %}>
         {{ form.csrf_token }}
         {{ render_field(form.text) }}
-        {{ render_field(form.difficulty, mb="mb-6") }}
+        {{ render_field(form.difficulty, mb="mb-6", autocomplete="off") }}
         <div class="text-center">
             {{ render_field(form.submit, False, mb="mb-1", class_="btn btn-blue btn-center btn-wide") }}
             <a href="{{ cancel }}" class="text-xs link">cancel</a>
