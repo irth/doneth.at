@@ -22,7 +22,6 @@ class SettingsForm(FlaskForm):
         'Start of day hour',
         widget=NumberInput(min=0, max=23),
         validators=[
-            DataRequired(),
             NumberRange(min=0, max=23)
         ]
     )
