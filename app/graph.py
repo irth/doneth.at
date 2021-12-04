@@ -58,9 +58,13 @@ def gen_graph_data(numbers):
     dots = [absolute_to_percentage_position(
         n, scale_base) for n in numbers]
     lines = list(zip(dots, dots[1:]))
+    avg = sum(dots)/len(dots)
+    print(dots)
+    print(avg)
 
     return {
         "dots": dots,
         "lines": lines,
         "scale": scale,
+        "avg": avg,
     }

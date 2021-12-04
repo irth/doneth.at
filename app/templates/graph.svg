@@ -13,6 +13,7 @@
     {% for n in scale %}
         <line x1="10%" y1="{{ 16.6 * loop.index }}%" x2="96%" y2="{{ 16.6 * loop.index }}%" stroke="#ddd" stroke-width="2px" />
     {% endfor %}
+    <line x1="10%" y1="{{ avg }}%" x2="96%" y2="{{ avg }}%" stroke="#89f393" stroke-width="2px" />
     </g>
     <g class="legend" style="font-size: 0.9em; text-align:right;">
     {% for n in scale | reverse %}
